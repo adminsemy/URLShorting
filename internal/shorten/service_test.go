@@ -2,37 +2,22 @@ package shorten
 
 import (
 	"context"
-	"reflect"
 	"testing"
 
 	"github.com/adminsemy/URLShorting/internal/model"
+	"github.com/adminsemy/URLShorting/internal/storage"
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestService_Shorten(t *testing.T) {
-	type args struct {
-		ctx   context.Context
-		input model.ShortenInput
-	}
-	tests := []struct {
-		name    string
-		s       *Service
-		args    args
-		want    *model.Shortening
-		wantErr bool
-	}{
-		// TODO: Add test cases.
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			s := &Service{}
-			got, err := s.Shorten(tt.args.ctx, tt.args.input)
-			if (err != nil) != tt.wantErr {
-				t.Errorf("Service.Shorten() error = %v, wantErr %v", err, tt.wantErr)
-				return
-			}
-			if !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("Service.Shorten() = %v, want %v", got, tt.want)
-			}
-		})
-	}
+	t.Run("generates shorting for a given URL ", func(t *testing.T) {
+		svc := NewService(storage.NewInMemory())
+		input := model.ShortenInput{RawURL: "https://google.com"}
+		shortening, err := svc.Shorten(context.Background(), input)
+		require.NoError(t, err)
+		require.NotEmpty(t, shortening.Identidier)
+		assert.Equal(t, input.RawURL, shortening.OriginalURL)
+		assert.NotZero(t, shortening.CreatedAt)
+	})
 }

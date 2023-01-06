@@ -7,7 +7,17 @@ import (
 	"github.com/google/uuid"
 )
 
+type Storage interface {
+	Put(ctx context.Context, shortening model.Shortening) (*model.Shortening, error)
+	Get(ctx context.Context, input string) (*model.Shortening, error)
+	IncrementVisits(ctx context.Context, identifier string) error
+}
 type Service struct {
+	storage Storage
+}
+
+func NewService(storage Storage) *Service {
+	return &Service{storage: storage}
 }
 
 func (s *Service) Shorten(ctx context.Context, input model.ShortenInput) (*model.Shortening, error) {
@@ -16,9 +26,15 @@ func (s *Service) Shorten(ctx context.Context, input model.ShortenInput) (*model
 		identifier = input.Identifier.OrElse(Shorten(id))
 	)
 
-	return &model.Shortening{
+	inputShortening := model.Shortening{
 		Identidier:  identifier,
 		OriginalURL: input.RawURL,
-	}, nil
+	}
+
+	shortening, err := s.storage.Put(ctx, inputShortening)
+	if err != nil {
+		return nil, err
+	}
+	return shortening, nil
 
 }

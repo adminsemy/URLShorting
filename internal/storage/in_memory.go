@@ -38,7 +38,7 @@ func (s *inMemory) Get(_ context.Context, identifier string) (*model.Shortening,
 	return &shortering, nil
 }
 
-func (s *inMemory) IncrementVisitsd(_ context.Context, identifier string) error {
+func (s *inMemory) IncrementVisits(_ context.Context, identifier string) error {
 	v, ok := s.m.Load(identifier)
 	if !ok {
 		return model.ErrNotFound
