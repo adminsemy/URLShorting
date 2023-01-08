@@ -2,6 +2,7 @@ package server
 
 import (
 	"context"
+	"net/http"
 
 	"github.com/adminsemy/URLShorting/internal/shorten"
 	"github.com/labstack/echo/v4"
@@ -46,6 +47,10 @@ func (s *Server) setupRouter() {
 
 	s.AddCloser(s.e.Shutdown)
 
+}
+
+func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	s.e.ServeHTTP(w, r)
 }
 
 func (s *Server) Shutdown(ctx context.Context) error {
