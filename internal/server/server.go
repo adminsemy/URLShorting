@@ -54,4 +54,5 @@ func (s *Server) Shutdown(ctx context.Context) error {
 			return err
 		}
 	}
+	return nil
 }

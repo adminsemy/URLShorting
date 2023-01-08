@@ -1,6 +1,9 @@
 package shorten
 
-import "strings"
+import (
+	"net/url"
+	"strings"
+)
 
 const alphabet = "ynAJfoSgdXHB5VasEMtcbPCr1uNZ4LG723ehWkvwYR6KpxjTm8iQUFqz9D"
 
@@ -31,4 +34,15 @@ func revers(s []uint32) {
 	for i, j := 0, len(s)-1; i < j; i, j = i+1, j-1 {
 		s[i], s[j] = s[j], s[i]
 	}
+}
+
+func PrependBaseURL(baseURL, identifier string) (string, error) {
+	parsed, err := url.Parse(baseURL)
+	if err != nil {
+		return "", err
+	}
+
+	parsed.Path = identifier
+
+	return parsed.String(), nil
 }
