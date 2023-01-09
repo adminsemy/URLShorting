@@ -19,7 +19,7 @@ type shortener interface {
 
 type shortenRequest struct {
 	URL        string `json:"url" validate:"required,url"`
-	Identidier string `json:"identidier,omitempty" validate:"omitempty,alphanum"`
+	Identifier string `json:"identifier,omitempty"`
 }
 
 type shortenResponse struct {
@@ -40,8 +40,8 @@ func HandleShorten(shortener shortener) echo.HandlerFunc {
 
 		identifier := mo.None[string]()
 
-		if strings.TrimSpace(req.Identidier) != "" {
-			identifier = mo.Some(req.Identidier)
+		if strings.TrimSpace(req.Identifier) != "" {
+			identifier = mo.Some(req.Identifier)
 		}
 
 		input := model.ShortenInput{
