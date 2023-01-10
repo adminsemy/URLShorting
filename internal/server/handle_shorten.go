@@ -19,7 +19,7 @@ type shortener interface {
 
 type shortenRequest struct {
 	URL        string `json:"url" validate:"required,url"`
-	Identifier string `json:"identifier,omitempty"`
+	Identifier string `json:"identifier,omitempty" validate:"omitempty,alphanum"`
 }
 
 type shortenResponse struct {

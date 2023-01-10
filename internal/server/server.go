@@ -34,6 +34,7 @@ func (s *Server) AddCloser(closer CloseFunc) {
 func (s *Server) setupRouter() {
 	s.e = echo.New()
 	s.e.HideBanner = true
+	s.e.Validator = NewValidator()
 
 	s.e.Pre(middleware.RemoveTrailingSlash())
 	s.e.Use(middleware.RequestID())
