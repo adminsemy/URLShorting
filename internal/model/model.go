@@ -25,3 +25,6 @@ type ShortenInput struct {
 	Identifier mo.Option[string]
 	CreatedBy  string
 }
+
+type User struct {
+}
