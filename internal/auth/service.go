@@ -70,5 +70,20 @@ func (s *Service) GitHubAuthCallback(ctx context.Context, sessionCode string) (*
 }
 
 func (s *Service) RegisterUser(ctx context.Context, ghUser *github.User, accessKey string) (*model.User, error) {
-	isMember, err := s.github.IsMember(ctx, accessKey)
+	isMember, err := s.github.IsMember(ctx, accessKey, "adminsemy-org", ghUser.GetLogin())
+	if err != nil {
+		return nil, err
+	}
+
+	if !isMember {
+		return nil, fmt.Errorf("%w %q", model.ErrUserIsNotMember, "adminsemy-org")
+	}
+
+	user := model.User{
+		GithubLogin:     ghUser.GetLogin(),
+		IsActivity:      true,
+		GithubAccessKey: accessKey,
+	}
+
+	return s.storage.CreateOrUpdate(ctx, user)
 }
