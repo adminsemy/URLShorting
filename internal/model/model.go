@@ -4,12 +4,14 @@ import (
 	"errors"
 	"time"
 
+	"github.com/golang-jwt/jwt/v4"
 	"github.com/samber/mo"
 )
 
 var (
 	ErrNotFound         = errors.New("not found")
 	ErrorIdenfierExists = errors.New("identidier already exists")
+	ErrUserIsNotMember  = errors.New("user is not member of organization")
 )
 
 type Shortening struct {
@@ -27,4 +29,13 @@ type ShortenInput struct {
 }
 
 type User struct {
+	IsActivity      bool      `json:"is_activity,omitempty"`
+	GithubLogin     string    `json:"github_login,omitempty"`
+	GithubAccessKey string    `json:"github_access_key,omitempty"`
+	CreatedAt       time.Time `json:"created_at,omitempty"`
+}
+
+type UserClaims struct {
+	jwt.RegisteredClaims
+	User `json:"user_data"`
 }
