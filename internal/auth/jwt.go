@@ -18,5 +18,5 @@ func MakeJWT(user model.User) (string, error) {
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 
-	return token.SignedString([]byte("adf45b6969c54308d14818f8eb973eafc731522e"))
+	return token.SignedString([]byte("JWT"))
 }
