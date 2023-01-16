@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	"github.com/adminsemy/URLShorting/internal/model"
-	"github.com/adminsemy/URLShorting/internal/storage"
+	storage "github.com/adminsemy/URLShorting/internal/storage/shorting"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )

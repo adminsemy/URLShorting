@@ -11,16 +11,19 @@ import (
 	"time"
 
 	"github.com/adminsemy/URLShorting/internal/auth"
+	"github.com/adminsemy/URLShorting/internal/github"
 	"github.com/adminsemy/URLShorting/internal/server"
 	"github.com/adminsemy/URLShorting/internal/shorten"
-	"github.com/adminsemy/URLShorting/internal/storage"
+	storage "github.com/adminsemy/URLShorting/internal/storage/shorting"
+	"github.com/adminsemy/URLShorting/internal/storage/user"
 )
 
 func main() {
 	svc := shorten.NewService(storage.NewInMemory())
-	authenticator := auth.NewService(git)
 
-	server := server.NewServer(svc)
+	authenticator := auth.NewService(github.NewClient(), user.NewUserInMemory(), " 61e6a9adf7a1794b3b5f", "adf45b6969c54308d14818f8eb973eafc731522e")
+
+	server := server.NewServer(svc, authenticator)
 
 	quit := make(chan os.Signal, 1)
 	signal.Notify(quit, os.Interrupt, syscall.SIGTERM)
