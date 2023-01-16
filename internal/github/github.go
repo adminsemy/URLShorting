@@ -63,8 +63,22 @@ func (c *Client) ExchangeCodeToAccessKey(ctx context.Context, clientID, clientSe
 }
 
 func (c *Client) IsMember(ctx context.Context, accessKey, org, user string) (bool, error) {
-	githhubClient := getGithubClientWithAccessKey(ctx, accessKey)
+	githubClient := getGithubClientWithAccessKey(ctx, accessKey)
+	isMember, _, err := githubClient.Organizations.IsMember(ctx, org, user)
+	if err != nil {
+		return false, err
+	}
 
+	return isMember, nil
+}
+
+func (c *Client) GetUser(ctx context.Context, accessKey, user string) (*github.User, error) {
+	githubClient := getGithubClientWithAccessKey(ctx, accessKey)
+	ghUser, _, err := githubClient.Users.Get(ctx, user)
+	if err != nil {
+		return nil, err
+	}
+	return ghUser, nil
 }
 
 func getGithubClientWithAccessKey(ctx context.Context, accessKey string) *github.Client {
