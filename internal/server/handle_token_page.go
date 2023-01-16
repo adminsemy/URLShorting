@@ -13,10 +13,11 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
+//go:embed public/static/*
 var static embed.FS
 
 func HandleTokenPage() echo.HandlerFunc {
-	tmpl, err := template.ParseFS(static, "../../public/static/token.html")
+	tmpl, err := template.ParseFS(static, "public/static/token.html")
 	if err != nil {
 		log.Fatalf("error parsing token.html template file: %v", err)
 	}
