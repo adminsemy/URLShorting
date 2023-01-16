@@ -81,6 +81,9 @@ func HandleTokenPage() echo.HandlerFunc {
 		}
 
 		return c.HTML(http.StatusOK, buf.String())
-
 	}
+}
+
+func HandleStatic() echo.HandlerFunc {
+	return echo.WrapHandler(http.FileServer(http.FS(static)))
 }

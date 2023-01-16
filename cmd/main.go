@@ -10,6 +10,7 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/adminsemy/URLShorting/internal/auth"
 	"github.com/adminsemy/URLShorting/internal/server"
 	"github.com/adminsemy/URLShorting/internal/shorten"
 	"github.com/adminsemy/URLShorting/internal/storage"
@@ -17,6 +18,8 @@ import (
 
 func main() {
 	svc := shorten.NewService(storage.NewInMemory())
+	authenticator := auth.NewService(git)
+
 	server := server.NewServer(svc)
 
 	quit := make(chan os.Signal, 1)

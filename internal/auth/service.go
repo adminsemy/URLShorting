@@ -41,7 +41,7 @@ func NewService(github GithubClient, storage Storage, ghClientID, ghClientSecret
 	}
 }
 
-func (s *Service) GithubAuthLink() string {
+func (s *Service) GithubAuthLinkProvider() string {
 	return fmt.Sprintf("https://github.com/login/oauth/authorize?scopes=user,read:org&client_id=%s", s.ghClientID)
 }
 
