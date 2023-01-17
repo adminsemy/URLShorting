@@ -21,7 +21,7 @@ import (
 func main() {
 	svc := shorten.NewService(storage.NewInMemory())
 
-	authenticator := auth.NewService(github.NewClient(), user.NewUserInMemory(), " 61e6a9adf7a1794b3b5f", "adf45b6969c54308d14818f8eb973eafc731522e")
+	authenticator := auth.NewService(github.NewClient(), user.NewUserInMemory(), "61e6a9adf7a1794b3b5f", "adf45b6969c54308d14818f8eb973eafc731522e")
 
 	server := server.NewServer(svc, authenticator)
 
