@@ -27,6 +27,7 @@ func HandleTokenPage() echo.HandlerFunc {
 		TelegramContactUserName string
 		GithubUserName          string
 		GithubAvatarURL         string
+		TelegramContactUsername string
 	}
 
 	type request struct {
@@ -71,9 +72,10 @@ func HandleTokenPage() echo.HandlerFunc {
 		var (
 			buf  bytes.Buffer
 			data = templateData{
-				Token:           req.Token,
-				GithubUserName:  claims.User.GithubLogin,
-				GithubAvatarURL: ghUser.GetAvatarURL(),
+				Token:                   req.Token,
+				GithubUserName:          ghUser.GetLogin(),
+				GithubAvatarURL:         ghUser.GetAvatarURL(),
+				TelegramContactUsername: "",
 			}
 		)
 		if err := tmpl.Execute(&buf, data); err != nil {

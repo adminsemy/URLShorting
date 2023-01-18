@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-	<title>Welcome!</title>
+	<title>Welcome, {{.GithubUserName}}!</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdn.tailwindcss.com"></script>
@@ -12,8 +12,8 @@
 			<div class="mx-auto">
 				<div class="divide-y divide-gray-300/50">
 					<div class="space-y-6 py-8 text-base leading-7 text-gray-900">
-						<img src="" class="h-16 mx-auto self-center rounded-full" alt="Tailwind Play" />
-						<p class="text-center">Welcome, <strong></strong></p>
+						<img src="{{.GithubAvatarURL}}" class="h-16 mx-auto self-center rounded-full" alt="Tailwind Play" />
+						<p class="text-center">Welcome, <strong>{{.GithubUserName}}</strong></p>
 					</div>
 					<div class="space-y-6 py-8 text-base leading-7 text-gray-600">
 						<p>Use JWT token below to access the API.</p>
@@ -23,7 +23,7 @@
 					</div>
 					<div class="pt-8 text-base">
 						<p class="text-gray-900 font-semibold leading-7">Have some questions?</p>
-						<p>Feel free to contact us via Telegram: <a href="https://t.me/" class="text-sky-500 hover:text-sky-600">@</a></p>
+						<p>Feel free to contact us via Telegram: <a href="https://t.me/{{.TelegramContactUsername}}" class="text-sky-500 hover:text-sky-600">@{{.TelegramContactUsername}}</a></p>
 						<p>
 							or <a href="https://github.com/defer-panic/url-shortener-api/issues/new" class="text-sky-500 hover:text-sky-600">open issue on GitHub &rarr;</a>
 						</p>
